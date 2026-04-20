@@ -16,7 +16,9 @@ function App() {
           <img src={viteLogo} className="vite" alt="Vite logo" />
         </div>
         <div>
-          <h1>Economical Used Cars</h1>
+          <h1 className="text-4xl font-bold text-blue-600 underline text-center mt-10">
+            Economical Used Cars
+          </h1>
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
