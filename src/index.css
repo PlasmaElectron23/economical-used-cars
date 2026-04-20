@@ -1,6 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  /* This is where your custom "paint" colors go now! */
-  --color-brand-blue: #1e40af;
+  /* Brand Colors - Red, Orange, Gray palette */
+  --color-brand-red: #dc2626;
+  --color-brand-orange: #f97316;
+  --color-brand-gray: #475569;
+  
+  /* Neutral scale for contrast */
+  --color-brand-white: #ffffff;
+  --color-brand-black: #020617;
+}
+
+/* Base styles */
+@layer base {
+  body {
+    @apply bg-slate-950 text-white antialiased;
+  }
 }
