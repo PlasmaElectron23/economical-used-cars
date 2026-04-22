@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { carData } from '../cars' // Importing our central car list
+import { carData } from '../cars' 
 
 function Home() {
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans">
       
-      {/* 1. Hero Section */}
+      {/* Hero Section */}
       <section className="flex flex-col items-center justify-center py-20 px-6 border-b border-slate-900">
         <div className="mb-10">
           <img 
@@ -31,7 +31,7 @@ function Home() {
         </header>
       </section>
 
-      {/* 2. Featured Inventory (Dynamic Filter) */}
+      {/* Featured Inventory (Dynamic Filter) */}
       <section className="py-20 px-6 max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
           <div>
@@ -86,42 +86,57 @@ function Home() {
         </div>
       </section>
 
-      {/* 3. Contact & Location Section */}
-      <section className="bg-slate-900 py-16 px-6">
+      {/* Contact & Location Section */}
+      <section className="bg-slate-900 py-20 px-6 border-t border-slate-800">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-4xl font-black italic uppercase mb-6">Visit Us in <span className="text-brand-red">Ocala</span></h2>
+            <h2 className="text-4xl font-black italic uppercase mb-6">
+              Visit Us in <span className="text-brand-red">Ocala</span>
+            </h2>
             <p className="text-slate-400 text-lg mb-8 leading-relaxed max-w-md">
               Reliable transportation shouldn't break the bank. Stop by our Ocala lot today to test drive your next vehicle.
             </p>
-            <div className="space-y-6 font-bold uppercase tracking-widest">
-              <div className="flex items-start gap-4">
-                <span className="text-brand-orange text-xl">📍</span>
+            
+            <div className="space-y-8">
+              {/* Phone Card */}
+              <a 
+                href="tel:+16892829355" 
+                className="flex items-center gap-6 group bg-slate-950 p-4 border border-slate-800 hover:border-brand-orange transition-colors"
+              >
+                <span className="text-brand-orange text-3xl group-hover:scale-110 transition-transform">📞</span>
                 <div>
-                  <p className="text-white">Our Location</p>
-                  <p className="text-slate-500 text-sm">Ocala, Florida</p>
+                  <p className="text-slate-500 font-bold uppercase text-xs tracking-widest">Call or Text</p>
+                  <p className="text-white text-xl font-black tracking-tighter">+1 (689) 282-9355</p>
                 </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <span className="text-brand-orange text-xl">📞</span>
+              </a>
+
+              {/* Location Card */}
+              <div className="flex items-center gap-6 bg-slate-950 p-4 border border-slate-800">
+                <span className="text-brand-red text-3xl">📍</span>
                 <div>
-                  <p className="text-white">Call Us</p>
-                  <p className="text-slate-500 text-sm">(352) 555-0123</p>
+                  <p className="text-slate-500 font-bold uppercase text-xs tracking-widest">Our Location</p>
+                  <p className="text-white text-xl font-black tracking-tighter">Ocala, Florida</p>
                 </div>
               </div>
             </div>
           </div>
           
-          {/* Mock Map View */}
-          <div className="bg-slate-950 border border-slate-800 h-80 rounded-sm flex flex-col items-center justify-center text-slate-700 font-black uppercase italic p-4 text-center">
-             <div className="text-4xl mb-2 opacity-20">📍</div>
-             <p className="opacity-40">Map View Coming Soon</p>
-             <p className="text-[10px] mt-2 opacity-30 not-italic tracking-[0.5em]">Serving Marion County</p>
+          {/* Visual Map/Brand Box */}
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-brand-red to-brand-orange rounded-sm blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+            <div className="relative bg-slate-950 border border-slate-800 h-80 rounded-sm flex flex-col items-center justify-center text-center p-8">
+              <h3 className="text-brand-red font-black italic text-3xl uppercase mb-2">Economical</h3>
+              <p className="text-white font-black italic text-xl uppercase tracking-widest border-b-2 border-brand-orange pb-2">Used Cars</p>
+              <p className="text-slate-500 mt-6 font-bold uppercase text-sm tracking-[0.3em]">Ocala's Trusted Dealer</p>
+              <div className="mt-8 px-6 py-2 bg-slate-900 border border-slate-700 text-slate-400 text-[10px] font-black uppercase tracking-[0.5em]">
+                Marion County
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 4. Footer */}
+      {/* Footer */}
       <footer className="py-12 border-t border-slate-900 text-center">
         <p className="text-slate-600 font-bold uppercase text-[10px] tracking-[0.5em]">
           © 2026 Economical Used Cars | Quality You Can Drive

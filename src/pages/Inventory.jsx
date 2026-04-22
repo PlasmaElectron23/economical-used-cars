@@ -70,7 +70,7 @@ function Inventory() {
                 </div>
 
                 <a 
-                  href={`tel:3525550123`} // Using a phone link for easy contact
+                  href="tel:+16892829355" 
                   className="block w-full mt-6 py-4 bg-transparent border-2 border-slate-800 text-center font-black uppercase italic hover:border-brand-orange hover:text-brand-orange transition-all duration-300"
                 >
                   Call for Availability
@@ -81,7 +81,7 @@ function Inventory() {
         </div>
       </main>
 
-      {/* 4. Contact Footer */}
+      {/* Contact Footer */}
       <footer className="bg-slate-900 py-12 px-6 text-center border-t border-slate-800">
         <div className="mb-6">
           <p className="text-brand-orange font-black italic uppercase mb-2">Need a test drive?</p>
