@@ -15,15 +15,15 @@
     - [x] Update `wrangler.toml` to link the D1 `database_id` and R2 `bucket_name`.
 
 ## 2. The Backend (The Bridge)
-- [ ] **Develop Cloudflare Worker**
-    - [ ] **CORS Middleware:** Allow Frontend access.
-    - [ ] **Admin Auth:** Secure the `/admin` logic with an API Key.
-    - [ ] **POST Handler:**
-        - [ ] **Validation:** Check that all fields (Make, Model, Price) exist.
-        - [ ] **Storage:** Stream to R2 and save metadata to D1.
-    - [ ] **GET Handler:** Fetch inventory list from D1.
-    - [ ] **Image Server:** Generate public links or routing for R2 files.
-    - [ ] **DELETE Handler:** Cleanup D1 and R2 simultaneously.
+- [x] **Develop Cloudflare Worker**
+- [x] **CORS Middleware:** Allow Frontend access.
+- [x] **Admin Auth:** Secure the `/admin` logic with an API Key.
+- [x] **POST Handler:**
+- [x] **D1 Integration** Check that all fields (Make, Model, Price) exist.
+- [x] **R2 Integration:** Stream to R2 and save metadata to D1.
+- [x] **GET Handler:** Fetch inventory list from D1.
+- [x] **Image Server:** Generate public links or routing for R2 files.
+- [x] **DELETE Handler:** Cleanup D1 and R2 simultaneously.
 
 ## 3. The Frontend (The User Experience)
 - [ ] **Build Admin Dashboard Form**
