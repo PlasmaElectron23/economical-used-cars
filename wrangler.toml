@@ -1,0 +1,11 @@
+name = "economical-used-cars"
+compatibility_date = "2026-04-26"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "economical-db"
+database_id = "e9998aa7-ed64-47ef-ad16-845de322d810"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "economical-images"

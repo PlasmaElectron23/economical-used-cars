@@ -1,18 +1,18 @@
 # Economical Used Cars - Web Project Workflow
 
 ## 1. The Environment Setup (The Foundation)
-- [ ] **Initialize Vite & Tailwind**
-    - [ ] `npm create vite@latest` (Choose React)
-    - [ ] `npm install -D tailwindcss postcss autoprefixer`
-    - [ ] `npx tailwindcss init -p`
-- [ ] **Enable R2 & Create Bucket**
-    - [ ] Log into Cloudflare Dashboard -> R2 -> "Enable".
-    - [ ] Run `npx wrangler r2 bucket create economical-images`.
-- [ ] **Initialize SQL Schema**
-    - [ ] Create `schema.sql` with `CREATE TABLE` logic.
-    - [ ] Run `npx wrangler d1 execute economical-db --local --file=./schema.sql`.
-- [ ] **Configure Wrangler Bindings**
-    - [ ] Update `wrangler.toml` to link the D1 `database_id` and R2 `bucket_name`.
+- [x] **Initialize Vite & Tailwind**
+    - [x] `npm create vite@latest` (Choose React)
+    - [x] `npm install -D tailwindcss postcss autoprefixer`
+    - [x] `npx tailwindcss init -p`
+- [x] **Enable R2 & Create Bucket**
+    - [x] Log into Cloudflare Dashboard -> R2 -> "Enable".
+    - [x] Run `npx wrangler r2 bucket create economical-images`.
+- [x] **Initialize SQL Schema**
+    - [x] Create `schema.sql` with `CREATE TABLE` logic.
+    - [x] Run `npx wrangler d1 execute economical-db --local --file=./schema.sql`.
+- [x] **Configure Wrangler Bindings**
+    - [x] Update `wrangler.toml` to link the D1 `database_id` and R2 `bucket_name`.
 
 ## 2. The Backend (The Bridge)
 - [ ] **Develop Cloudflare Worker**
@@ -40,3 +40,7 @@
     - [ ] Run `schema.sql` on production: `npx wrangler d1 execute economical-db --remote --file=./schema.sql`.
     - [ ] Deploy Worker: `npx wrangler deploy`.
     - [ ] Deploy React App to Cloudflare Pages or Netlify.
+    - [ ] Production Hardening (Security)
+        - [ ] Restrict CORS: Update R2 settings from * to the production domain.
+    - [ ] Automated Deployment Script (Optional Bash/PowerShell)
+        - [ ] Create deploy.sh or deploy.ps1 for one-click launches:
