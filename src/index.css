@@ -1,19 +1,9 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-  /* Brand Colors - Red, Orange, Gray palette */
-  --color-brand-red: #dc2626;
-  --color-brand-orange: #f97316;
-  --color-brand-gray: #475569;
-  
-  /* Neutral scale for contrast */
-  --color-brand-white: #ffffff;
-  --color-brand-black: #020617;
-}
-
-/* Base styles */
 @layer base {
   body {
-    @apply bg-slate-950 text-white antialiased;
+    @apply bg-slate-950 antialiased;
   }
 }

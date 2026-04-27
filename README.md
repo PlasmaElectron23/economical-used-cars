@@ -1,16 +1,42 @@
-# React + Vite
+# Economical Used Cars - Web Project Workflow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 1. The Environment Setup (The Foundation)
+- [ ] **Initialize Vite & Tailwind**
+    - [ ] `npm create vite@latest` (Choose React)
+    - [ ] `npm install -D tailwindcss postcss autoprefixer`
+    - [ ] `npx tailwindcss init -p`
+- [ ] **Enable R2 & Create Bucket**
+    - [ ] Log into Cloudflare Dashboard -> R2 -> "Enable".
+    - [ ] Run `npx wrangler r2 bucket create economical-images`.
+- [ ] **Initialize SQL Schema**
+    - [ ] Create `schema.sql` with `CREATE TABLE` logic.
+    - [ ] Run `npx wrangler d1 execute economical-db --local --file=./schema.sql`.
+- [ ] **Configure Wrangler Bindings**
+    - [ ] Update `wrangler.toml` to link the D1 `database_id` and R2 `bucket_name`.
 
-Currently, two official plugins are available:
+## 2. The Backend (The Bridge)
+- [ ] **Develop Cloudflare Worker**
+    - [ ] **CORS Middleware:** Allow Frontend access.
+    - [ ] **Admin Auth:** Secure the `/admin` logic with an API Key.
+    - [ ] **POST Handler:**
+        - [ ] **Validation:** Check that all fields (Make, Model, Price) exist.
+        - [ ] **Storage:** Stream to R2 and save metadata to D1.
+    - [ ] **GET Handler:** Fetch inventory list from D1.
+    - [ ] **Image Server:** Generate public links or routing for R2 files.
+    - [ ] **DELETE Handler:** Cleanup D1 and R2 simultaneously.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 3. The Frontend (The User Experience)
+- [ ] **Build Admin Dashboard Form**
+    - [ ] **Form Logic:** Inputs for Year, Make, Model, Price, Miles.
+    - [ ] **Image Preview:** Display photo before hitting "Upload."
+    - [ ] **Feedback:** Implement loading spinners and success notifications.
+- [ ] **Build Public Pages**
+    - [ ] **Home:** Implement featured car logic.
+    - [ ] **Inventory:** Grid view of all available stock.
+    - [ ] **State Sync:** Ensure UI updates immediately after actions.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 4. Deployment (Going Live)
+- [ ] **Production Push**
+    - [ ] Run `schema.sql` on production: `npx wrangler d1 execute economical-db --remote --file=./schema.sql`.
+    - [ ] Deploy Worker: `npx wrangler deploy`.
+    - [ ] Deploy React App to Cloudflare Pages or Netlify.

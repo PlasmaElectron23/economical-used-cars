@@ -1,17 +1,13 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
-import Inventory from './pages/Inventory'
-
 function App() {
   return (
-    <Routes>
-      {/* This is your "Main Entrance" (Home Page) */}
-      <Route path="/" element={<Home />} />
-
-      {/* This is your "Car Lot" (Full Inventory Page) */}
-      <Route path="/inventory" element={<Inventory />} />
-    </Routes>
+    <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 text-center">
+      <h1 className="text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500">
+        ECONOMICAL <br /> USED CARS
+      </h1>
+      <p className="mt-4 text-slate-400 font-medium tracking-wide uppercase">
+        Admin Dashboard Ready • Ocala, FL
+      </p>
+    </div>
   )
 }
 
