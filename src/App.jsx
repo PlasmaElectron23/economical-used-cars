@@ -11,8 +11,7 @@ function App() {
   });
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [loading, setLoading] = useState(false);
-  
-  // u1-5: Reference to reset the file input DOM element
+  const [selectedCar, setSelectedCar] = useState(null);
   const fileInputRef = useRef(null);
 
   const fetchInventory = async () => {
@@ -31,10 +30,7 @@ function App() {
     const newStatus = currentStatus === 1 ? 0 : 1;
     await fetch(`${API_BASE}/api/inventory/feature/${id}`, {
       method: 'POST',
-      headers: { 
-        'Authorization': ADMIN_KEY, 
-        'Content-Type': 'application/json' 
-      },
+      headers: { 'Authorization': ADMIN_KEY, 'Content-Type': 'application/json' },
       body: JSON.stringify({ featured: newStatus })
     });
     fetchInventory();
@@ -71,7 +67,10 @@ function App() {
   );
 
   const CarCard = ({ car, isAdmin }) => (
-    <div className="bg-white rounded-2xl shadow-sm border overflow-hidden group relative">
+    <div 
+      onClick={() => setSelectedCar(car)}
+      className="bg-white rounded-2xl shadow-sm border overflow-hidden group relative cursor-pointer hover:shadow-md transition"
+    >
       <div className="relative h-56 bg-slate-200">
         <img 
           src={`${API_BASE}/images/${car.images?.split(',')[0]}`} 
@@ -79,22 +78,20 @@ function App() {
           alt={car.model}
         />
         {isAdmin && (
-          <>
+          <div className="absolute top-3 w-full px-3 flex justify-between pointer-events-none">
             <button 
-              onClick={() => handleToggleFeatured(car.id, car.is_featured)}
-              className={`absolute top-3 left-3 p-2 rounded-full shadow-lg transition ${car.is_featured ? 'bg-yellow-400 text-white' : 'bg-white/80 text-gray-400 hover:text-yellow-500'}`}
-              title="Feature on Home Page"
+              onClick={(e) => { e.stopPropagation(); handleToggleFeatured(car.id, car.is_featured); }}
+              className={`p-2 rounded-full shadow-lg transition pointer-events-auto ${car.is_featured ? 'bg-yellow-400 text-white' : 'bg-white/80 text-gray-400 hover:text-yellow-500'}`}
             >
               ★
             </button>
             <button 
-              onClick={() => handleDelete(car.id)}
-              className="absolute top-3 right-3 bg-red-500/90 hover:bg-red-600 text-white p-2 rounded-full shadow-lg transition"
-              title="Delete Vehicle"
+              onClick={(e) => { e.stopPropagation(); handleDelete(car.id); }}
+              className="bg-red-500/90 hover:bg-red-600 text-white p-2 rounded-full shadow-lg transition pointer-events-auto"
             >
               ✕
             </button>
-          </>
+          </div>
         )}
       </div>
       <div className="p-5">
@@ -107,35 +104,103 @@ function App() {
         </p>
         <div className="flex justify-between text-xs font-bold text-gray-400 uppercase">
           <span>{Number(car.miles).toLocaleString()} Miles</span>
-          <span className="text-green-500 font-extrabold tracking-widest">In Stock</span>
+          <span className="text-green-500 font-extrabold tracking-widest text-[10px]">In Stock</span>
         </div>
       </div>
     </div>
   );
+
+  const DetailModal = () => {
+    if (!selectedCar) return null;
+    const images = selectedCar.images ? selectedCar.images.split(',') : [];
+
+    return (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-sm overflow-y-auto">
+        <div className="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl relative animate-in fade-in zoom-in duration-200 my-auto">
+          <button 
+            onClick={() => setSelectedCar(null)}
+            className="absolute top-4 right-4 z-10 bg-black/50 text-white p-2 rounded-full hover:bg-black transition"
+          >
+            ✕ Close
+          </button>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="bg-slate-100 p-2 space-y-2 max-h-[70vh] overflow-y-auto">
+              {images.map((img, idx) => (
+                <img 
+                  key={idx} 
+                  src={`${API_BASE}/images/${img}`} 
+                  className="w-full rounded-xl shadow-sm" 
+                  alt={`${selectedCar.model} view ${idx + 1}`}
+                />
+              ))}
+            </div>
+
+            <div className="p-8">
+              <span className="text-blue-600 font-bold uppercase tracking-widest text-xs">Available Now</span>
+              <h2 className="text-3xl font-black text-slate-900 mt-2">
+                {selectedCar.year} {selectedCar.make} {selectedCar.model}
+              </h2>
+              <div className="flex items-center gap-4 mt-4">
+                <p className="text-3xl font-black text-slate-800">${Number(selectedCar.price).toLocaleString()}</p>
+                <div className="h-6 w-px bg-slate-300"></div>
+                <p className="text-slate-500 font-bold">{Number(selectedCar.miles).toLocaleString()} Miles</p>
+              </div>
+
+              <div className="mt-8">
+                <h4 className="font-bold text-slate-400 uppercase text-xs tracking-wider mb-2">Description</h4>
+                <p className="text-slate-700 leading-relaxed whitespace-pre-wrap">
+                  {selectedCar.description || "Please contact our office for a full history report and detailed specifications on this vehicle."}
+                </p>
+              </div>
+
+              <div className="mt-12 p-6 bg-slate-50 rounded-2xl border border-slate-200">
+                <p className="font-bold text-slate-800 mb-1">Interested in this car?</p>
+                <p className="text-sm text-slate-500 mb-4">Call our Ocala office to schedule a test drive.</p>
+                <a 
+                  href="tel:6892829355" 
+                  className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:bg-blue-700 transition"
+                >
+                  (689) 282-9355
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   // --- PAGE VIEWS ---
 
   if (view === 'home') return (
     <div className="bg-slate-50 min-h-screen flex flex-col">
       <Navbar />
+      <DetailModal />
       <header className="py-24 px-4 text-center bg-gradient-to-b from-slate-900 to-slate-800 text-white">
-        <h2 className="text-5xl font-black mb-6 text-balance">Quality Rides, Ocala Prices.</h2>
+        <h2 className="text-5xl font-black mb-6">Quality Rides, Ocala Prices.</h2>
         <p className="text-slate-400 max-w-2xl mx-auto text-lg">
           Welcome to Economical Used Cars. We specialize in reliable, high-quality pre-owned 
-          vehicles for the Ocala community. Quality you can trust, prices you can afford.
+          vehicles for the Ocala community.
         </p>
       </header>
       
       <section className="max-w-6xl mx-auto py-20 px-4 flex-grow">
         <h3 className="text-center text-sm font-black uppercase tracking-[0.3em] text-blue-600 mb-12">Featured Picks</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {inventory.filter(c => c.is_featured).slice(0, 3).map(car => (
-            <CarCard key={car.id} car={car} />
-          ))}
-        </div>
-        {inventory.filter(c => c.is_featured).length === 0 && (
-            <p className="text-center text-slate-400 italic">No featured vehicles currently selected.</p>
+        
+        {/* u1-7: Restored empty state message */}
+        {inventory.filter(c => c.is_featured).length === 0 ? (
+          <div className="text-center py-12 bg-white rounded-3xl border border-dashed border-slate-200">
+            <p className="text-slate-400 italic">Our featured selection is currently being updated. Check back soon!</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {inventory.filter(c => c.is_featured).slice(0, 3).map(car => (
+              <CarCard key={car.id} car={car} />
+            ))}
+          </div>
         )}
+
         <div className="text-center mt-16">
           <button onClick={() => setView('inventory')} className="bg-slate-900 text-white px-10 py-4 rounded-full font-bold hover:bg-slate-700 transition shadow-xl">
             Browse Full Inventory
@@ -146,13 +211,13 @@ function App() {
       <footer className="bg-white border-t py-16 px-4">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
           <div>
-            <h4 className="font-black text-xl mb-4">Economical Used Cars</h4>
+            <h4 className="font-black text-xl mb-4 text-slate-900">Economical Used Cars</h4>
             <p className="text-gray-500 italic">"Providing reliable transportation to Marion County."</p>
           </div>
-          <div className="md:text-right">
-            <h4 className="font-bold text-gray-800 mb-2">Contact Us</h4>
-            <p className="text-gray-500">13804 SW 42nd Court Rd, Ocala, FL, 34473</p>
-            <p className="text-blue-600 font-bold text-lg">(689) 282-9355</p>
+          <div className="md:text-right text-slate-900">
+            <h4 className="font-bold mb-2">Contact Us</h4>
+            <p className="text-gray-500 text-sm">13804 SW 42nd Court Rd, Ocala, FL, 34473</p>
+            <p className="text-blue-600 font-black text-lg">(689) 282-9355</p>
           </div>
         </div>
       </footer>
@@ -162,6 +227,7 @@ function App() {
   if (view === 'inventory') return (
     <div className="bg-slate-50 min-h-screen flex flex-col">
       <Navbar />
+      <DetailModal />
       <div className="max-w-6xl mx-auto py-16 px-4 flex-grow">
         <div className="flex justify-between items-end mb-12">
           <div>
@@ -175,8 +241,8 @@ function App() {
         </div>
       </div>
       <footer className="bg-white border-t py-8 px-4 mt-12">
-          <div className="max-w-6xl mx-auto text-center text-gray-400 text-sm">
-              <p>13804 SW 42nd Court Rd, Ocala, FL | (689) 282-9355</p>
+          <div className="max-w-6xl mx-auto text-center text-gray-400 text-sm font-bold uppercase tracking-widest">
+              <p>Ocala, FL | (689) 282-9355</p>
           </div>
       </footer>
     </div>
@@ -185,6 +251,7 @@ function App() {
   return (
     <div className="bg-slate-50 min-h-screen">
       <Navbar />
+      <DetailModal />
       <div className="max-w-7xl mx-auto py-12 px-4 grid grid-cols-1 lg:grid-cols-4 gap-12">
         <div className="lg:col-span-1">
           <div className="bg-white p-6 rounded-2xl shadow-xl border border-slate-200 sticky top-24">
@@ -205,36 +272,27 @@ function App() {
               setLoading(false);
               setFormData({ make: '', model: '', year: '', price: '', miles: '', description: '' });
               setSelectedFiles([]);
-              
-              // u1-5: Reset the file input UI
               if (fileInputRef.current) fileInputRef.current.value = "";
-              
               fetchInventory();
             }} className="space-y-4">
-              <input name="make" placeholder="Make (e.g. Toyota)" value={formData.make} onChange={(e) => setFormData({...formData, make: e.target.value})} className="w-full p-3 border rounded-xl bg-slate-50" required />
-              <input name="model" placeholder="Model (e.g. Corolla)" value={formData.model} onChange={(e) => setFormData({...formData, model: e.target.value})} className="w-full p-3 border rounded-xl bg-slate-50" required />
-              <textarea name="description" placeholder="Vehicle description/history..." value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} className="w-full p-3 border rounded-xl bg-slate-50 h-28" />
-              
+              <input name="make" placeholder="Make" value={formData.make} onChange={(e) => setFormData({...formData, make: e.target.value})} className="w-full p-3 border rounded-xl bg-slate-50" required />
+              <input name="model" placeholder="Model" value={formData.model} onChange={(e) => setFormData({...formData, model: e.target.value})} className="w-full p-3 border rounded-xl bg-slate-50" required />
+              <textarea name="description" placeholder="Vehicle details..." value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} className="w-full p-3 border rounded-xl bg-slate-50 h-28" />
               <div className="grid grid-cols-2 gap-3">
                 <input type="number" name="year" placeholder="Year" value={formData.year} onChange={(e) => setFormData({...formData, year: e.target.value})} className="w-full p-3 border rounded-xl bg-slate-50" />
                 <input type="number" name="price" placeholder="Price ($)" value={formData.price} onChange={(e) => setFormData({...formData, price: e.target.value})} className="w-full p-3 border rounded-xl bg-slate-50" />
               </div>
-              
               <input type="number" name="miles" placeholder="Miles" value={formData.miles} onChange={(e) => setFormData({...formData, miles: e.target.value})} className="w-full p-3 border rounded-xl bg-slate-50" />
-
               <div className="border-2 border-dashed border-blue-200 bg-blue-50/50 p-4 rounded-xl text-center">
                 <label className="block text-xs font-bold text-blue-600 uppercase mb-2">Upload Photos</label>
                 <input 
-                  type="file" 
-                  multiple 
-                  ref={fileInputRef} // u1-5: Attached the ref
+                  type="file" multiple ref={fileInputRef} 
                   onChange={(e) => setSelectedFiles(Array.from(e.target.files))} 
-                  className="text-xs file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer" 
+                  className="text-xs file:bg-blue-600 file:text-white file:border-0 file:px-4 file:py-2 file:rounded-full" 
                 />
               </div>
-
-              <button className="w-full bg-slate-900 text-white p-4 rounded-xl font-bold hover:bg-slate-700 shadow-lg transition">
-                {loading ? 'Adding to Fleet...' : 'Save Vehicle'}
+              <button className="w-full bg-slate-900 text-white p-4 rounded-xl font-bold hover:bg-slate-700 transition">
+                {loading ? 'Adding...' : 'Save Vehicle'}
               </button>
             </form>
           </div>
