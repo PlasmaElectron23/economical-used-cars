@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const API_BASE = "http://127.0.0.1:8787";
 const ADMIN_KEY = "eduardo-super-secret-key";
@@ -11,6 +11,9 @@ function App() {
   });
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [loading, setLoading] = useState(false);
+  
+  // u1-5: Reference to reset the file input DOM element
+  const fileInputRef = useRef(null);
 
   const fetchInventory = async () => {
     try {
@@ -202,6 +205,10 @@ function App() {
               setLoading(false);
               setFormData({ make: '', model: '', year: '', price: '', miles: '', description: '' });
               setSelectedFiles([]);
+              
+              // u1-5: Reset the file input UI
+              if (fileInputRef.current) fileInputRef.current.value = "";
+              
               fetchInventory();
             }} className="space-y-4">
               <input name="make" placeholder="Make (e.g. Toyota)" value={formData.make} onChange={(e) => setFormData({...formData, make: e.target.value})} className="w-full p-3 border rounded-xl bg-slate-50" required />
@@ -213,15 +220,14 @@ function App() {
                 <input type="number" name="price" placeholder="Price ($)" value={formData.price} onChange={(e) => setFormData({...formData, price: e.target.value})} className="w-full p-3 border rounded-xl bg-slate-50" />
               </div>
               
-              {/* u1-1: Restore Miles Field */}
               <input type="number" name="miles" placeholder="Miles" value={formData.miles} onChange={(e) => setFormData({...formData, miles: e.target.value})} className="w-full p-3 border rounded-xl bg-slate-50" />
 
-              {/* u1-3: Outlined File Button Area */}
               <div className="border-2 border-dashed border-blue-200 bg-blue-50/50 p-4 rounded-xl text-center">
                 <label className="block text-xs font-bold text-blue-600 uppercase mb-2">Upload Photos</label>
                 <input 
                   type="file" 
                   multiple 
+                  ref={fileInputRef} // u1-5: Attached the ref
                   onChange={(e) => setSelectedFiles(Array.from(e.target.files))} 
                   className="text-xs file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer" 
                 />
