@@ -1,5 +1,5 @@
--- Drop the table if it exists to start fresh (Optional: only if you want to reset)
--- DROP TABLE IF EXISTS cars;
+-- This ensures we start with a clean slate every time we run the file
+DROP TABLE IF EXISTS cars;
 
 CREATE TABLE IF NOT EXISTS cars (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS cars (
     year INTEGER NOT NULL,
     price REAL NOT NULL,
     miles INTEGER,
-    images TEXT, -- This is the crucial column for 2.8
+    images TEXT,           -- Comma-separated list of R2 filenames
+    description TEXT,      -- Detailed car description for customers
+    is_featured INTEGER DEFAULT 0, -- 1 if it's a "Top 3" favorite, 0 if not
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );

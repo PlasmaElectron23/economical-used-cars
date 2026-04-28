@@ -36,12 +36,12 @@
     - [x] State Sync: Ensure UI updates immediately after actions.
 
 ## 4. The Backend - Customer
-- [ ] Update SQL Schema
-    - [ ] Add description column
-    - [ ] Add featured column (0 for no, 1 for yes)
-- [ ] Update src/worker.js logic
-    - [ ] Update the POST handler to accept the description
-    - [ ] New PATCH handler so Eduardo can toggle a car as "Featured" without re-uploading it.
+- [x] Update SQL Schema
+    - [x] Add description column
+    - [x] Add featured column (0 for no, 1 for yes)
+- [x] Update src/worker.js logic
+    - [x] Update the POST handler to accept the description
+    - [x] New PATCH handler so Eduardo can toggle a car as "Featured" without re-uploading it.
 
 ## 5. The Frontend - Customer
 - [ ] Home page with name of the business, a brief description and message, the top 3 cars, and contact info.
