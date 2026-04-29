@@ -44,15 +44,31 @@
     - [x] New PATCH handler so Eduardo can toggle a car as "Featured" without re-uploading it.
 
 ## 5. The Frontend - Customer
-- [ ] Home page with name of the business, a brief description and message, the top 3 cars, and contact info.
-- [ ] Inventory page that will show all the cars and their description.
+- [x] Home page with name of the business, a brief description and message, the top 3 cars, and contact info.
+- [x] Inventory page that will show all the cars and their description.
 
-## 6. Deployment
+## 6. Architecture & Refactoring
+- [ ] Decouple Components
+    - [ ] Extract `Navbar`, `CarCard`, `Footer`, and `DetailModal` into `src/components/`.
+    - [ ] Create dedicated page files in `src/pages/` (Home.jsx, Inventory.jsx, Admin.jsx).
+- [ ] Localization Architecture
+    - [ ] Move `text` dictionary to `src/constants/translations.js`.
+    - [ ] Implement `LanguageContext` to avoid prop-drilling the `lang` state.
+- [ ] Routing
+    - [ ] Integrate `react-router-dom` for clean URLs (e.g., `/inventory` instead of state-based views).
+
+## 7. Advanced Enhancements
+- [ ] Search & Filtering: Add a search bar to the inventory page to filter by Make/Model.
+- [ ] Image Optimization: Implement client-side compression before uploading to R2.
+- [ ] Persistence: Store `lang` preference in `localStorage`.
+- [ ] SEO: Add meta tags and titles for better visibility in Ocala local search.
+
+## 8. Deployment
 - [ ] Production Push
     - [ ] Run `schema.sql` on production: `npx wrangler d1 execute economical-db --remote --file=./schema.sql`.
     - [ ] Deploy Worker: `npx wrangler deploy`.
     - [ ] Deploy React App to Cloudflare Pages.
-    - [ ] Production Hardening (Security)
-        - [ ] Restrict CORS: Update R2 settings from * to the production domain.
-    - [ ] Automated Deployment Script (Optional Bash/PowerShell)
-        - [ ] Create deploy.sh or deploy.ps1 for one-click launches:
+- [ ] Production Hardening (Security)
+    - [ ] Restrict CORS: Update R2 settings from * to the production domain.
+- [ ] Automated Deployment Script (Optional Bash/PowerShell)
+    - [ ] Create deploy.sh or deploy.ps1 for one-click launches.

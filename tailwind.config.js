@@ -2,10 +2,15 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}", 
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        brandBlue: '#2563eb',
+        silverCellSlate: '#1e293b', 
+      },
+    },
   },
   plugins: [],
 }

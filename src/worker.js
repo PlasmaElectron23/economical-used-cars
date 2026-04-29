@@ -8,11 +8,12 @@ export default {
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
     };
 
+    // 1. Handle Preflight CORS
     if (request.method === "OPTIONS") {
       return new Response(null, { headers: corsHeaders });
     }
 
-    // Admin Auth
+    // 2. Admin Authentication Gate
     if (request.method === "POST" || request.method === "DELETE") {
       const authHeader = request.headers.get("Authorization");
       const API_KEY = "eduardo-super-secret-key"; 
@@ -26,10 +27,11 @@ export default {
     }
 
     try {
-      // Image Server (Section 2.8)
+      // 3. Image Server (Serves files from R2 Bucket)
       if (url.pathname.startsWith("/images/")) {
         const imageKey = url.pathname.split("/").pop();
         const object = await env.BUCKET.get(imageKey);
+        
         if (!object) return new Response("Not Found", { status: 404 });
         
         const headers = new Headers();
@@ -38,7 +40,7 @@ export default {
         return new Response(object.body, { headers });
       }
 
-      // GET: Fetch Inventory (Section 2.7)
+      // 4. GET: Fetch Inventory
       if (url.pathname === "/api/inventory" && request.method === "GET") {
         const { results } = await env.DB.prepare("SELECT * FROM cars ORDER BY id DESC").all();
         return new Response(JSON.stringify(results), {
@@ -46,7 +48,7 @@ export default {
         });
       }
 
-      // NEW 4.2 POST: Toggle Featured Status
+      // 5. POST: Toggle Featured Status
       if (url.pathname.startsWith("/api/inventory/feature/") && request.method === "POST") {
         const id = url.pathname.split("/").pop();
         const { featured } = await request.json(); 
@@ -55,24 +57,30 @@ export default {
           .bind(featured, id)
           .run();
 
-        return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
+        return new Response(JSON.stringify({ success: true }), { 
+          headers: { ...corsHeaders, "Content-Type": "application/json" } 
+        });
       }
 
-      // UPDATED 4.2 POST: Add New Car (Includes Description)
+      // 6. POST: Add New Car (Handles Images + Metadata)
       if (url.pathname === "/api/inventory" && request.method === "POST") {
         const formData = await request.formData();
         const imageFiles = formData.getAll("images");
         const uploadedKeys = [];
 
+        // Upload each image to R2
         for (const file of imageFiles) {
-          const key = `${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
-          await env.BUCKET.put(key, file);
-          uploadedKeys.push(key);
+          if (file.size > 0) {
+            const key = `${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
+            await env.BUCKET.put(key, file);
+            uploadedKeys.push(key);
+          }
         }
 
+        // Save to D1 Database
         await env.DB.prepare(`
-          INSERT INTO cars (make, model, year, price, miles, images, description) 
-          VALUES (?, ?, ?, ?, ?, ?, ?)
+          INSERT INTO cars (make, model, year, price, miles, images, description, is_featured) 
+          VALUES (?, ?, ?, ?, ?, ?, ?, 0)
         `)
         .bind(
           formData.get("make"), 
@@ -85,25 +93,36 @@ export default {
         )
         .run();
 
-        return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
+        return new Response(JSON.stringify({ success: true }), { 
+          headers: { ...corsHeaders, "Content-Type": "application/json" } 
+        });
       }
 
-      // DELETE Handler (Section 2.9)
+      // 7. DELETE: Remove Car and cleanup R2 Bucket
       if (url.pathname.startsWith("/api/inventory/") && request.method === "DELETE") {
         const id = url.pathname.split("/").pop();
+        
+        // Find image keys to delete from R2 first
         const car = await env.DB.prepare("SELECT images FROM cars WHERE id = ?").bind(id).first();
         
         if (car?.images) {
-          for (const key of car.images.split(',')) {
-            await env.BUCKET.delete(key);
+          const keys = car.images.split(',');
+          for (const key of keys) {
+            if (key.trim()) {
+              await env.BUCKET.delete(key.trim());
+            }
           }
         }
+
+        // Delete row from D1
         await env.DB.prepare("DELETE FROM cars WHERE id = ?").bind(id).run();
         
-        return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
+        return new Response(JSON.stringify({ success: true }), { 
+          headers: { ...corsHeaders, "Content-Type": "application/json" } 
+        });
       }
 
-      return new Response("Not Found", { status: 404, headers: corsHeaders });
+      return new Response("Endpoint Not Found", { status: 404, headers: corsHeaders });
 
     } catch (error) {
       return new Response(JSON.stringify({ error: error.message }), {
