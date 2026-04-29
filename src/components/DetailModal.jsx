@@ -1,12 +1,14 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 const DetailModal = ({ 
   selectedCar, 
   setSelectedCar, 
-  lang, 
-  text, 
   API_BASE 
 }) => {
+  // Access global translations
+  const { t, lang } = useLanguage();
+
   // If no car is selected, don't render anything
   if (!selectedCar) return null;
 
@@ -20,9 +22,9 @@ const DetailModal = ({
         {/* Close Button */}
         <button 
           onClick={() => setSelectedCar(null)} 
-          className="absolute top-4 right-4 z-10 bg-black/50 text-white px-4 py-2 rounded-full hover:bg-black transition text-sm font-bold"
+          className="absolute top-4 right-4 z-10 bg-black/50 text-white px-4 py-2 rounded-full hover:bg-black transition text-sm font-bold uppercase tracking-tighter"
         >
-          {text[lang].modalClose}
+          {t.modalClose}
         </button>
 
         <div className="grid grid-cols-1 md:grid-cols-2">
@@ -32,7 +34,7 @@ const DetailModal = ({
               <img 
                 key={idx} 
                 src={`${API_BASE}/images/${img}`} 
-                className="w-full rounded-xl shadow-sm" 
+                className="w-full rounded-xl shadow-sm hover:opacity-95 transition" 
                 alt={`${selectedCar.make} detail view ${idx + 1}`} 
               />
             ))}
@@ -41,10 +43,10 @@ const DetailModal = ({
           {/* Details Column */}
           <div className="p-8 flex flex-col justify-between">
             <div>
-              <span className="text-blue-600 font-bold uppercase tracking-widest text-xs">
-                {text[lang].modalStatus}
+              <span className="text-blue-600 font-black uppercase tracking-widest text-[10px]">
+                {t.modalStatus || "In Stock"}
               </span>
-              <h2 className="text-3xl font-black text-slate-900 mt-2">
+              <h2 className="text-3xl font-black text-slate-900 mt-2 tracking-tighter">
                 {selectedCar.year} {selectedCar.make} {selectedCar.model}
               </h2>
               
@@ -53,16 +55,16 @@ const DetailModal = ({
                   ${Number(selectedCar.price).toLocaleString()}
                 </p>
                 <div className="h-6 w-px bg-slate-300"></div>
-                <p className="text-slate-500 font-bold">
-                  {Number(selectedCar.miles).toLocaleString()} {text[lang].miles}
+                <p className="text-slate-500 font-bold uppercase text-xs tracking-widest">
+                  {Number(selectedCar.miles).toLocaleString()} {t.miles}
                 </p>
               </div>
 
               <div className="mt-8">
-                <h4 className="font-bold text-slate-400 uppercase text-xs tracking-wider mb-2">
-                  {text[lang].desc}
+                <h4 className="font-black text-slate-400 uppercase text-[10px] tracking-[0.2em] mb-2">
+                  {t.formDescription}
                 </h4>
-                <p className="text-slate-700 leading-relaxed whitespace-pre-wrap">
+                <p className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm">
                   {selectedCar.description || (lang === 'es' ? "Contáctenos para más información." : "Contact us for info.")}
                 </p>
               </div>
@@ -70,11 +72,11 @@ const DetailModal = ({
 
             {/* Call to Action Box */}
             <div className="mt-12 p-6 bg-slate-50 rounded-2xl border border-slate-200">
-              <p className="font-bold text-slate-800 mb-1">{text[lang].modalInterest}</p>
-              <p className="text-sm text-slate-500 mb-4">{text[lang].modalCall}</p>
+              <p className="font-black text-slate-800 mb-1 uppercase text-xs tracking-wide">{t.modalInterest}</p>
+              <p className="text-sm text-slate-500 mb-4 font-medium">{t.modalCall}</p>
               <a 
                 href="tel:6892829355" 
-                className="inline-block w-full text-center bg-blue-600 text-white px-6 py-4 rounded-full font-bold shadow-lg hover:bg-blue-700 transition"
+                className="inline-block w-full text-center bg-blue-600 text-white px-6 py-4 rounded-full font-black shadow-lg hover:bg-slate-900 transition-all duration-300 uppercase tracking-widest text-sm"
               >
                 (689) 282-9355
               </a>

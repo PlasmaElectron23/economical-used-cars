@@ -1,66 +1,90 @@
-// src/constants/translations.js
-
 export const text = {
-  es: {
-    navHome: "Portada",
-    navInventory: "Inventario",
-    navAdmin: "Administrador",
-    heroTitle: "Autos de Calidad, Precios de Ocala.",
-    heroSub: "Bienvenidos a Economical Used Cars. Nos especializamos en vehículos usados confiables y de alta calidad para la comunidad de Ocala.",
-    featuredTitle: "Selecciones Destacadas",
-    emptyFeatured: "Nuestra selección destacada se está actualizando. ¡Vuelva pronto!",
-    browseBtn: "Ver Todo el Inventario",
-    stockTitle: "Inventario Actual",
-    stockSub: "Vehículos confiables listos para los caminos de Ocala.",
-    found: "Vehículos encontrados",
-    footerQuote: "Brindando transporte confiable al Condado de Marion.",
-    contact: "Contáctenos",
-    adminTitle: "Gestor de Vehículos",
-    fleetTitle: "Flota Actual",
-    saveBtn: "Guardar Vehículo",
-    adding: "Agregando...",
-    miles: "Millas",
-    price: "Precio",
-    year: "Año",
-    make: "Marca",
-    model: "Modelo",
-    desc: "Descripción",
-    upload: "Subir Fotos",
-    modalClose: "✕ Cerrar",
-    modalStatus: "Disponible Ahora",
-    modalInterest: "¿Interesado en este auto?",
-    modalCall: "Llame a nuestra oficina de Ocala para programar una prueba de manejo.",
-    inStock: "En Inventario"
-  },
   en: {
+    // Navbar
     navHome: "Home",
     navInventory: "Inventory",
-    navAdmin: "Management",
-    heroTitle: "Quality Rides, Ocala Prices.",
-    heroSub: "Welcome to Economical Used Cars. We specialize in reliable, high-quality pre-owned vehicles for the Ocala community.",
-    featuredTitle: "Featured Picks",
-    emptyFeatured: "Our featured selection is currently being updated. Check back soon!",
-    browseBtn: "Browse Full Inventory",
-    stockTitle: "Current Stock",
-    stockSub: "Reliable vehicles ready for the Ocala roads.",
-    found: "Vehicles found",
-    footerQuote: "Providing reliable transportation to Marion County.",
-    contact: "Contact Us",
-    adminTitle: "Vehicle Manager",
-    fleetTitle: "Current Fleet",
-    saveBtn: "Save Vehicle",
-    adding: "Adding...",
-    miles: "Miles",
-    price: "Price",
-    year: "Year",
-    make: "Make",
-    model: "Model",
-    desc: "Description",
-    upload: "Upload Photos",
-    modalClose: "✕ Close",
-    modalStatus: "Available Now",
-    modalInterest: "Interested in this car?",
-    modalCall: "Call our Ocala office to schedule a test drive.",
-    inStock: "In Stock"
+    navAdmin: "Admin",
+    
+    // Home Page (Hero & Info)
+    heroTitle: "Quality Rides at Ocala Prices",
+    heroSubtitle: "Reliable and affordable used cars in Marion Oaks and surrounding areas.",
+    featuredTitle: "Top 3 Featured Picks",
+    viewAllInventory: "View Full Inventory",
+    contactUs: "Contact Us",
+    address: "13804 SW 42nd Court Rd, Ocala, FL, 34473",
+    
+    // Inventory Page
+    inventoryTitle: "Our Current Stock",
+    noCarsFound: "No vehicles available at the moment. Please check back soon!",
+    searchPlaceholder: "Search by make or model...",
+    
+    // Car Card & Modal
+    miles: "miles",
+    viewDetails: "View Details",
+    close: "Close",
+    descriptionTitle: "Vehicle Description",
+    
+    // Admin Page
+    adminTitle: "Inventory Management",
+    addCar: "Add New Vehicle",
+    formYear: "Year",
+    formMake: "Make",
+    formModel: "Model",
+    formPrice: "Price",
+    formMiles: "Miles",
+    formDescription: "Description",
+    formImages: "Upload Images",
+    submiting: "Uploading...",
+    submitBtn: "Add to Inventory",
+    deleteBtn: "Delete",
+    toggleFeatured: "Featured",
+    
+    // Footer
+    footerQuote: "Providing Ocala families with reliable transportation since 2026.",
+    rightsReserved: "All Rights Reserved."
+  },
+  es: {
+    // Navbar
+    navHome: "Inicio",
+    navInventory: "Inventario",
+    navAdmin: "Admin",
+    
+    // Home Page (Hero & Info)
+    heroTitle: "Calidad al mejor precio en Ocala",
+    heroSubtitle: "Autos usados confiables y económicos en Marion Oaks y sus alrededores.",
+    featuredTitle: "Nuestros 3 Favoritos",
+    viewAllInventory: "Ver todo el inventario",
+    contactUs: "Contáctenos",
+    address: "13804 SW 42nd Court Rd, Ocala, FL, 34473",
+    
+    // Inventory Page
+    inventoryTitle: "Nuestro Inventario Actual",
+    noCarsFound: "No hay vehículos disponibles en este momento. ¡Vuelva pronto!",
+    searchPlaceholder: "Buscar por marca o modelo...",
+    
+    // Car Card & Modal
+    miles: "millas",
+    viewDetails: "Ver Detalles",
+    close: "Cerrar",
+    descriptionTitle: "Descripción del Vehículo",
+    
+    // Admin Page
+    adminTitle: "Gestión de Inventario",
+    addCar: "Agregar Nuevo Vehículo",
+    formYear: "Año",
+    formMake: "Marca",
+    formModel: "Modelo",
+    formPrice: "Precio",
+    formMiles: "Millas",
+    formDescription: "Descripción",
+    formImages: "Subir Imágenes",
+    submiting: "Subiendo...",
+    submitBtn: "Agregar al Inventario",
+    deleteBtn: "Eliminar",
+    toggleFeatured: "Destacado",
+    
+    // Footer
+    footerQuote: "Brindando transporte confiable a las familias de Ocala desde 2026.",
+    rightsReserved: "Todos los derechos reservados."
   }
 };

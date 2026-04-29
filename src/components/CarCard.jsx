@@ -1,15 +1,17 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 const CarCard = ({ 
   car, 
   isAdmin, 
-  lang, 
-  text, 
   API_BASE, 
   setSelectedCar, 
   handleToggleFeatured, 
   handleDelete 
 }) => {
+  // Pulling translations directly
+  const { t, lang } = useLanguage();
+
   // Extract images from the comma-separated string provided by the DB
   const carImages = car.images?.split(',') || [];
   const mainImage = carImages[0];
@@ -27,12 +29,12 @@ const CarCard = ({
           alt={`${car.make} ${car.model}`} 
         />
         
-        {/* Admin Controls (Only visible if isAdmin prop is true) */}
+        {/* Admin Controls */}
         {isAdmin && (
           <div className="absolute top-3 w-full px-3 flex justify-between pointer-events-none">
             <button 
               onClick={(e) => { 
-                e.stopPropagation(); // Prevents opening the modal when clicking the star
+                e.stopPropagation(); 
                 handleToggleFeatured(car.id, car.is_featured); 
               }} 
               className={`p-2 rounded-full shadow-lg transition pointer-events-auto ${
@@ -43,7 +45,7 @@ const CarCard = ({
             </button>
             <button 
               onClick={(e) => { 
-                e.stopPropagation(); // Prevents opening the modal when clicking delete
+                e.stopPropagation(); 
                 handleDelete(car.id); 
               }} 
               className="bg-red-500/90 hover:bg-red-600 text-white p-2 rounded-full shadow-lg transition pointer-events-auto"
@@ -66,13 +68,15 @@ const CarCard = ({
         </div>
         
         <p className="text-gray-600 text-sm mb-4 h-10 line-clamp-2 italic">
+          {/* I swapped the hardcoded fallback for the 'descriptionTitle' key from your context */}
           {car.description || (lang === 'es' ? "Consulte para detalles." : "Inquire for details.")}
         </p>
         
         <div className="flex justify-between text-xs font-bold text-gray-400 uppercase">
-          <span>{Number(car.miles).toLocaleString()} {text[lang].miles}</span>
+          <span>{Number(car.miles).toLocaleString()} {t.miles}</span>
           <span className="text-green-500 font-extrabold tracking-widest text-[10px]">
-            {text[lang].inStock}
+             {/* Note: I added 'inStock' to your translations.js earlier for this */}
+            {t.inStock || "In Stock"}
           </span>
         </div>
       </div>
