@@ -1,0 +1,12 @@
+{
+  "name": "economical-used-cars-api",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^3.109.2"
+  }
+}
