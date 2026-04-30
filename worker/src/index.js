@@ -14,11 +14,12 @@ export default {
     }
 
     // 2. Admin Authentication Gate
+    // We check for the key on any "write" operations (POST/DELETE)
     if (request.method === "POST" || request.method === "DELETE") {
       const authHeader = request.headers.get("Authorization");
-      const API_KEY = "eduardo-super-secret-key"; 
-
-      if (authHeader !== API_KEY) {
+      
+      // We use env.ADMIN_KEY so you can set it via 'wrangler secret put'
+      if (authHeader !== env.ADMIN_KEY) {
         return new Response(JSON.stringify({ error: "Unauthorized" }), {
           status: 401,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -27,7 +28,7 @@ export default {
     }
 
     try {
-      // 3. Image Server (Serves files from R2 Bucket)
+      // 3. Image Server
       if (url.pathname.startsWith("/images/")) {
         const imageKey = url.pathname.split("/").pop();
         const object = await env.BUCKET.get(imageKey);
@@ -62,13 +63,12 @@ export default {
         });
       }
 
-      // 6. POST: Add New Car (Handles Images + Metadata)
+      // 6. POST: Add New Car
       if (url.pathname === "/api/inventory" && request.method === "POST") {
         const formData = await request.formData();
         const imageFiles = formData.getAll("images");
         const uploadedKeys = [];
 
-        // Upload each image to R2
         for (const file of imageFiles) {
           if (file.size > 0) {
             const key = `${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
@@ -77,7 +77,6 @@ export default {
           }
         }
 
-        // Save to D1 Database
         await env.DB.prepare(`
           INSERT INTO cars (make, model, year, price, miles, images, description, is_featured) 
           VALUES (?, ?, ?, ?, ?, ?, ?, 0)
@@ -98,11 +97,9 @@ export default {
         });
       }
 
-      // 7. DELETE: Remove Car and cleanup R2 Bucket
+      // 7. DELETE: Remove Car
       if (url.pathname.startsWith("/api/inventory/") && request.method === "DELETE") {
         const id = url.pathname.split("/").pop();
-        
-        // Find image keys to delete from R2 first
         const car = await env.DB.prepare("SELECT images FROM cars WHERE id = ?").bind(id).first();
         
         if (car?.images) {
@@ -114,7 +111,6 @@ export default {
           }
         }
 
-        // Delete row from D1
         await env.DB.prepare("DELETE FROM cars WHERE id = ?").bind(id).run();
         
         return new Response(JSON.stringify({ success: true }), { 
