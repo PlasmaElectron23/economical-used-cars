@@ -19,12 +19,13 @@ const DetailModal = ({
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-sm overflow-y-auto">
       <div className="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl relative animate-in fade-in zoom-in duration-200 my-auto">
         
-        {/* Close Button */}
+        {/* Updated Close Button: Large, Red, and Circular with an X */}
         <button 
           onClick={() => setSelectedCar(null)} 
-          className="absolute top-4 right-4 z-10 bg-black/50 text-white px-4 py-2 rounded-full hover:bg-black transition text-sm font-bold uppercase tracking-tighter"
+          className="absolute top-4 right-4 z-[110] w-12 h-12 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center shadow-xl transition-all duration-200 hover:scale-110 active:scale-95 group"
+          aria-label="Close"
         >
-          {t.modalClose}
+          <span className="text-2xl font-bold leading-none">✕</span>
         </button>
 
         <div className="grid grid-cols-1 md:grid-cols-2">
