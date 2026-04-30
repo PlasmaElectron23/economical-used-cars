@@ -1,14 +1,14 @@
 name = "economical-used-cars-backend"
-main = "src/worker.js"
+main = "src/index.js"
 compatibility_date = "2026-04-28"
 
 # D1 Database Binding
 [[d1_databases]]
 binding = "DB"
-database_name = "cars-db"
-database_id = "PASTE_YOUR_ACTUAL_D1_ID_HERE"
+database_name = "economical-db"
+database_id = "e9998aa7-ed64-47ef-ad16-845de322d810"
 
 # R2 Storage Binding
 [[r2_buckets]]
 binding = "BUCKET"
-bucket_name = "cars-images"
+bucket_name = "economical-images"
