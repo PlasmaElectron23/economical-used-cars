@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom'; // 1. Import Router components
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext';
 import LanguageToggle from './LanguageToggle';
 
 const Navbar = () => {

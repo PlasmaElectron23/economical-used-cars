@@ -1,4 +1,4 @@
-name = "economical-cars-backend"
+name = "economical-used-cars-backend"
 main = "src/worker.js"
 compatibility_date = "2026-04-28"
 
@@ -12,7 +12,3 @@ database_id = "PASTE_YOUR_ACTUAL_D1_ID_HERE"
 [[r2_buckets]]
 binding = "BUCKET"
 bucket_name = "cars-images"
-
-# Environment Variables
-[vars]
-ADMIN_KEY = "eduardo-super-secret-key"

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import CarCard from '../components/CarCard';
+import CarCard from '../components/inventory/CarCard';
 
 const ADMIN_KEY = "kilo-power-5241"; // We will move this to an .env in step 7
 
