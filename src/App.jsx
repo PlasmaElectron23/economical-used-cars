@@ -1,40 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom'; // 1. Add this import
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import DetailModal from './components/DetailModal';
+import { Routes, Route } from 'react-router-dom';
 
-// Pages
+// Component Imports
+import Navbar from './components/common/Navbar';
+import Footer from './components/common/Footer';
+import DetailModal from './components/inventory/DetailModal';
+
+// Page Imports
 import Home from './pages/Home';
 import Inventory from './pages/Inventory';
 import Admin from './pages/Admin';
 
-const API_BASE = "http://127.0.0.1:8787";
+/**
+ * API_BASE: Production Cloudflare Worker URL
+ */
+const API_BASE = "https://economical-used-cars-backend.silchris7.workers.dev";
 
 function App() {
-  // 2. We DELETED the 'view' state! React Router handles the URL now.
   const [inventory, setInventory] = useState([]);
   const [selectedCar, setSelectedCar] = useState(null);
 
   const fetchInventory = async () => {
     try {
       const res = await fetch(`${API_BASE}/api/inventory`);
+      if (!res.ok) throw new Error("Failed to fetch inventory from Cloudflare");
       const data = await res.json();
       setInventory(data);
     } catch (err) { 
-      console.error("Connection error:", err); 
+      console.error("Cloudflare Connection error:", err); 
     }
   };
 
-  useEffect(() => { fetchInventory(); }, []);
+  useEffect(() => { 
+    fetchInventory(); 
+  }, []);
 
   return (
     <div className="bg-slate-50 min-h-screen flex flex-col">
-      {/* 3. Navbar no longer needs setView! */}
       <Navbar />
       
       <main className="flex-grow">
-        {/* 4. The Switchboard logic starts here */}
         <Routes>
           <Route path="/" element={
             <Home 
@@ -52,7 +57,11 @@ function App() {
             />
           } />
 
-          <Route path="/admin" element={
+          {/* 
+            STEP 7.3: Secret Admin URL 
+            Access at: https://economical-used-cars.pages.dev/admin-29amsk30sdf5
+          */}
+          <Route path="/admin-29amsk30sdf5" element={
             <Admin 
               inventory={inventory}
               fetchInventory={fetchInventory}

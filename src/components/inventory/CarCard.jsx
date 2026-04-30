@@ -1,4 +1,5 @@
 import React from 'react';
+// Updated import path to go up two levels to reach context
 import { useLanguage } from '../../context/LanguageContext';
 
 const CarCard = ({ 
@@ -9,10 +10,8 @@ const CarCard = ({
   handleToggleFeatured, 
   handleDelete 
 }) => {
-  // Pulling translations directly
   const { t, lang } = useLanguage();
 
-  // Extract images from the comma-separated string provided by the DB
   const carImages = car.images?.split(',') || [];
   const mainImage = carImages[0];
 
@@ -68,14 +67,12 @@ const CarCard = ({
         </div>
         
         <p className="text-gray-600 text-sm mb-4 h-10 line-clamp-2 italic">
-          {/* I swapped the hardcoded fallback for the 'descriptionTitle' key from your context */}
           {car.description || (lang === 'es' ? "Consulte para detalles." : "Inquire for details.")}
         </p>
         
         <div className="flex justify-between text-xs font-bold text-gray-400 uppercase">
           <span>{Number(car.miles).toLocaleString()} {t.miles}</span>
           <span className="text-green-500 font-extrabold tracking-widest text-[10px]">
-             {/* Note: I added 'inStock' to your translations.js earlier for this */}
             {t.inStock || "In Stock"}
           </span>
         </div>

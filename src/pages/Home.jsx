@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // 1. Import Link
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import CarCard from '../components/CarCard';
+// Updated path to find CarCard in the new subfolder
+import CarCard from '../components/inventory/CarCard';
 
 const Home = ({ 
   inventory, 
@@ -10,8 +11,8 @@ const Home = ({
 }) => {
   const { t } = useLanguage();
 
-  // Filter logic
-  const featuredCars = (inventory || []).filter(c => c.is_featured);
+  // Filter logic to show only featured cars
+  const featuredCars = (inventory || []).filter(c => c.is_featured === 1 || c.is_featured === true);
 
   return (
     <div className="flex-grow">
@@ -45,6 +46,7 @@ const Home = ({
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {/* Limit landing page to the first 3 featured cars */}
             {featuredCars.slice(0, 3).map(car => (
               <CarCard 
                 key={car.id} 
@@ -56,7 +58,7 @@ const Home = ({
           </div>
         )}
 
-        {/* 2. Changed 'button' to 'Link' and removed 'setView' */}
+        {/* Call to Action to full Inventory page */}
         <div className="text-center mt-20">
           <Link 
             to="/inventory" 

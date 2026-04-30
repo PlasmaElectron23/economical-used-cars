@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import CarCard from '../components/CarCard';
+import CarCard from '../components/inventory/CarCard';
 
 const Inventory = ({ 
   inventory = [], 
