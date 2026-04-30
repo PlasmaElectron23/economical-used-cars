@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom'; // Added for navigation back to home
 import { useLanguage } from '../context/LanguageContext';
 import CarCard from '../components/inventory/CarCard';
-import LanguageToggle from '../components/common/LanguageToggle'; // Added for convenience
 
+// This matches your backend security requirement
 const ADMIN_KEY = "kilo-power-5241";
 
 const Admin = ({ inventory, fetchInventory, API_BASE, setSelectedCar }) => {
@@ -84,25 +83,17 @@ const Admin = ({ inventory, fetchInventory, API_BASE, setSelectedCar }) => {
 
   return (
     <div className="max-w-7xl mx-auto py-12 px-4 w-full">
+      {/* 
+          Redundant Header and LanguageToggle removed. 
+          The Global Navbar now handles navigation and language.
+      */}
       
-      {/* Header with Navigation and Toggle */}
-      <div className="flex justify-between items-center mb-10 pb-6 border-b">
-        <div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">
-            Control Panel
-          </h1>
-          <Link to="/" className="text-blue-600 text-sm font-bold hover:underline">
-            ← {lang === 'es' ? "Volver al sitio" : "Back to Website"}
-          </Link>
-        </div>
-        <LanguageToggle />
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+        
         {/* LEFT COLUMN: The Add Form */}
         <div className="lg:col-span-1">
           <div className="bg-white p-6 rounded-2xl shadow-xl border border-slate-200 sticky top-24">
-            <h2 className="text-xl font-bold mb-6 text-slate-800 border-b pb-4">
+            <h2 className="text-xl font-bold mb-6 text-slate-800 border-b pb-4 uppercase tracking-wider">
               {t.adminTitle}
             </h2>
             
@@ -182,7 +173,7 @@ const Admin = ({ inventory, fetchInventory, API_BASE, setSelectedCar }) => {
         
         {/* RIGHT COLUMN: Fleet Management */}
         <div className="lg:col-span-3">
-          <h2 className="text-2xl font-black mb-6 text-slate-800 tracking-tighter">
+          <h2 className="text-2xl font-black mb-6 text-slate-800 tracking-tighter uppercase">
             {t.inventoryTitle}
           </h2>
           
