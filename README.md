@@ -66,9 +66,9 @@
 - [x] Do some housekeeping with folders and files.
 - [x] Remove the Admin page from the navigation bar on the Home page.
 - [x] Make a secret URL for the Admin page.
-- [ ] Optimize for mobile screens
+- [ ] Basic optimization for mobile screens
 
-## 8. Advanced Enhancements
+## . Advanced Enhancements
 - [ ] Admin Authentication
 	- [ ] Make the Admin page only accessible to the owner and the developer by means of a password. 
 - [ ] Implement the ability to edit posted car cards in the Admin page.
@@ -77,7 +77,7 @@
 - [ ] Persistence: Store `lang` preference in `localStorage`.
 - [ ] SEO: Add meta tags and titles for better visibility in Ocala local search.
 
-## 9. Deployment
+## . Deployment
 - [ ] Production Push
     - [ ] Run `schema.sql` on production: `npx wrangler d1 execute economical-db --remote --file=./schema.sql`.
     - [ ] Deploy Worker: `npx wrangler deploy`.
