@@ -4,14 +4,20 @@ export const text = {
     navHome: "Home",
     navInventory: "Inventory",
     navAdmin: "Admin",
+    navContact: "Contact Us",
     
     // Home Page (Hero & Info)
     heroTitle: "Quality Rides at Ocala Prices",
     heroSubtitle: "Reliable and affordable used cars in Marion Oaks and surrounding areas.",
     featuredTitle: "Top 3 Featured Picks",
     viewAllInventory: "View Full Inventory",
-    contactUs: "Contact Us",
-    address: "13804 SW 42nd Court Rd, Ocala, FL, 34473",
+    
+    // Contact Section
+    formAddress: "Address",
+    formPhone: "Phone",
+    formHours: "Hours",
+    closed: "Sunday: Closed",
+    address: "13804 SW 42nd Court Rd, Ocala, FL 34473",
     
     // Inventory Page
     inventoryTitle: "Our Current Stock",
@@ -40,7 +46,7 @@ export const text = {
     toggleFeatured: "Featured",
     
     // Footer
-    footerQuote: "Providing Ocala families with reliable transportation since 2026.",
+    footerQuote: "Brindando transporte confiable a las familias de Ocala",
     rightsReserved: "All Rights Reserved."
   },
   es: {
@@ -48,14 +54,20 @@ export const text = {
     navHome: "Inicio",
     navInventory: "Inventario",
     navAdmin: "Admin",
+    navContact: "Contáctanos",
     
     // Home Page (Hero & Info)
     heroTitle: "Calidad al mejor precio en Ocala",
     heroSubtitle: "Autos usados confiables y económicos en Marion Oaks y sus alrededores.",
     featuredTitle: "Nuestros 3 Favoritos",
     viewAllInventory: "Ver todo el inventario",
-    contactUs: "Contáctenos",
-    address: "13804 SW 42nd Court Rd, Ocala, FL, 34473",
+
+    // Contact Section
+    formAddress: "Dirección",
+    formPhone: "Teléfono",
+    formHours: "Horario",
+    closed: "Domingo: Cerrado",
+    address: "13804 SW 42nd Court Rd, Ocala, FL 34473",
     
     // Inventory Page
     inventoryTitle: "Nuestro Inventario Actual",
@@ -84,7 +96,7 @@ export const text = {
     toggleFeatured: "Destacado",
     
     // Footer
-    footerQuote: "Brindando transporte confiable a las familias de Ocala desde 2026.",
+    footerQuote: "Brindando transporte confiable a las familias de Ocala",
     rightsReserved: "Todos los derechos reservados."
   }
 };
