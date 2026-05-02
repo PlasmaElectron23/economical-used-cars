@@ -10,32 +10,32 @@ const Home = ({ inventory, setSelectedCar, API_BASE }) => {
 
   return (
     <div className="flex-grow">
-      {/* HERO SECTION */}
-      <header className="py-24 px-4 text-center bg-gradient-to-b from-slate-900 to-slate-800 text-white">
+      {/* HERO SECTION - Responsive text and padding */}
+      <header className="py-16 md:py-24 px-6 text-center bg-gradient-to-b from-slate-900 to-slate-800 text-white">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight tracking-tighter">
+          <h2 className="text-4xl md:text-6xl font-black mb-6 leading-tight tracking-tighter">
             {t.heroTitle}
           </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto text-lg md:text-xl leading-relaxed mb-10">
+          <p className="text-slate-400 max-w-2xl mx-auto text-base md:text-xl leading-relaxed mb-10">
             {t.heroSubtitle}
           </p>
           <a 
             href="/inventory" 
-            className="inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-10 rounded-full transition shadow-lg uppercase tracking-widest text-sm"
+            className="inline-block w-full md:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-10 rounded-full transition shadow-lg uppercase tracking-widest text-sm"
           >
             {t.navInventory}
           </a>
         </div>
       </header>
 
-      {/* Featured Cars Section */}
-      <section className="py-20 px-5 max-w-7xl mx-auto w-full">
-        <h2 className="text-3xl font-black uppercase mb-12 text-slate-900 tracking-tighter border-l-8 border-blue-600 pl-4">
+      {/* Featured Cars Section - responsive gap and padding */}
+      <section className="py-12 md:py-20 px-6 max-w-7xl mx-auto w-full">
+        <h2 className="text-2xl md:text-3xl font-black uppercase mb-8 md:mb-12 text-slate-900 tracking-tighter border-l-8 border-blue-600 pl-4">
           {t.featuredTitle || "Featured Vehicles"}
         </h2>
         
         {featuredCars.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {featuredCars.map(car => (
               <CarCard 
                 key={car.id} 
@@ -52,53 +52,53 @@ const Home = ({ inventory, setSelectedCar, API_BASE }) => {
         )}
       </section>
 
-      {/* NEW CONTACT US SECTION */}
-      <section id="contact" className="py-20 bg-slate-100 px-5 border-t border-slate-200">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      {/* CONTACT US SECTION - Responsive grid stacking */}
+      <section id="contact" className="py-12 md:py-20 bg-slate-100 px-6 border-t border-slate-200">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
           
           {/* Contact Details */}
           <div>
-            <h2 className="text-4xl font-black uppercase mb-8 tracking-tighter text-slate-900">
+            <h2 className="text-3xl md:text-4xl font-black uppercase mb-8 tracking-tighter text-slate-900">
               {t.navContact || "Contact Us"}
             </h2>
-            <div className="space-y-6 text-lg text-slate-700">
+            <div className="space-y-6 text-base md:text-lg text-slate-700">
               <div className="flex items-start gap-4">
-                <span className="bg-blue-600 text-white p-2 rounded-lg mt-1">
+                <span className="bg-blue-600 text-white p-2 rounded-lg mt-1 shrink-0">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </span>
                 <div>
-                  <p className="font-bold text-slate-900 uppercase text-sm tracking-widest mb-1">
+                  <p className="font-bold text-slate-900 uppercase text-xs tracking-widest mb-1">
                     {t.formAddress || "Address"}
                   </p>
-                  <p>123 Main St, Ocala, FL 34471</p>
+                  <p>13804 SW 42nd Court Rd, Ocala, FL 34473</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <span className="bg-blue-600 text-white p-2 rounded-lg mt-1">
+                <span className="bg-blue-600 text-white p-2 rounded-lg mt-1 shrink-0">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                 </span>
                 <div>
-                  <p className="font-bold text-slate-900 uppercase text-sm tracking-widest mb-1">
+                  <p className="font-bold text-slate-900 uppercase text-xs tracking-widest mb-1">
                     {t.formPhone || "Phone"}
                   </p>
-                  <p>(352) 555-0123</p>
+                  <p>(689) 282-9355</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <span className="bg-blue-600 text-white p-2 rounded-lg mt-1">
+                <span className="bg-blue-600 text-white p-2 rounded-lg mt-1 shrink-0">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </span>
                 <div>
-                  <p className="font-bold text-slate-900 uppercase text-sm tracking-widest mb-1">
+                  <p className="font-bold text-slate-900 uppercase text-xs tracking-widest mb-1">
                     {t.formHours || "Hours"}
                   </p>
                   <p>Mon - Sat: 9:00 AM - 6:00 PM</p>
@@ -108,8 +108,8 @@ const Home = ({ inventory, setSelectedCar, API_BASE }) => {
             </div>
           </div>
 
-          {/* Dynamic Map */}
-          <div className="h-96 w-full rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
+          {/* Dynamic Map - Responsive Height */}
+          <div className="h-72 md:h-96 w-full rounded-3xl overflow-hidden shadow-2xl border-4 md:border-8 border-white">
             <iframe 
               title="Business Location"
               width="100%" 

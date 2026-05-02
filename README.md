@@ -66,7 +66,11 @@
 - [x] Do some housekeeping with folders and files.
 - [x] Remove the Admin page from the navigation bar on the Home page.
 - [x] Make a secret URL for the Admin page.
-- [ ] Basic optimization for mobile screens
+- [ ] Basic optimization for mobile screens.
+
+## 8. Frontend Update
+- [x] Add Contact section in Home page.
+- [ ] Add browser tab icon.
 
 ## . Advanced Enhancements
 - [ ] Admin Authentication
