@@ -69,12 +69,6 @@ const Home = ({ inventory, setSelectedCar, API_BASE }) => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </span>
-                <div>
-                  <p className="font-bold text-slate-900 uppercase text-xs tracking-widest mb-1">
-                    {t.formAddress || "Address"}
-                  </p>
-                  <p>13804 SW 42nd Court Rd, Ocala, FL 34473</p>
-                </div>
               </div>
 
               <div className="flex items-start gap-4">
@@ -108,18 +102,6 @@ const Home = ({ inventory, setSelectedCar, API_BASE }) => {
             </div>
           </div>
 
-          {/* Dynamic Map - Responsive Height */}
-          <div className="h-72 md:h-96 w-full rounded-3xl overflow-hidden shadow-2xl border-4 md:border-8 border-white">
-            <iframe 
-              title="Business Location"
-              width="100%" 
-              height="100%" 
-              style={{ border: 0 }}
-              src="https://maps.google.com/maps?q=Ocala%20Florida&t=&z=14&ie=UTF8&iwloc=&output=embed"
-              allowFullScreen
-              loading="lazy"
-            ></iframe>
-          </div>
         </div>
       </section>
     </div>
