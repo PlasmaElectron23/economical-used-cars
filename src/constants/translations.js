@@ -13,9 +13,13 @@ export const text = {
     viewAllInventory: "View Full Inventory",
     
     // Contact Section
+    contactTitle: "Contact Us",
+    phoneLabel: "Direct Frequency",
+    hoursLabel: "Business Hours",
     formAddress: "Address",
     formPhone: "Phone",
     formHours: "Hours",
+    daysOpen: "7 Days a Week",
     closed: "Sunday: Closed",
     address: "13804 SW 42nd Court Rd, Ocala, FL 34473",
     
@@ -63,9 +67,13 @@ export const text = {
     viewAllInventory: "Ver todo el inventario",
 
     // Contact Section
+    contactTitle: "Contáctanos",
+    phoneLabel: "Línea Directa",
+    hoursLabel: "Horario",
     formAddress: "Dirección",
     formPhone: "Teléfono",
     formHours: "Horario",
+    daysOpen: "7 Días a la Semana",
     closed: "Domingo: Cerrado",
     address: "13804 SW 42nd Court Rd, Ocala, FL 34473",
     
