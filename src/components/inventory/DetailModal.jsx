@@ -13,84 +13,80 @@ const DetailModal = ({
   const images = selectedCar.images ? selectedCar.images.split(',') : [];
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-4 bg-slate-900/90 backdrop-blur-sm">
-      {/* 
-          Main Modal Container: 
-          - overflow-hidden: Prevents the parent from scrolling.
-          - h-full md:h-auto: Full screen on mobile, fits content on desktop.
-          - max-h-[90vh]: Prevents it from getting too tall on desktops.
-      */}
-      <div className="bg-white w-full max-w-4xl h-full md:h-auto md:max-h-[90vh] md:rounded-3xl shadow-2xl relative flex flex-col overflow-hidden animate-in fade-in zoom-in duration-200">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-4 bg-black/95 backdrop-blur-md">
+      <div className="bg-zinc-950 w-full max-w-5xl h-full md:h-auto md:max-h-[90vh] border border-zinc-800 shadow-2xl relative flex flex-col overflow-hidden">
         
-        {/* 
-            STAY-PUT CLOSE BUTTON: 
-            Positioned 'absolute' relative to the 'overflow-hidden' container.
-            It will never move when the content below it scrolls.
-        */}
+        {/* CLOSE BUTTON */}
         <button 
           onClick={() => setSelectedCar(null)} 
-          className="absolute top-4 right-4 z-[120] w-12 h-12 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 group"
-          aria-label="Close"
+          className="absolute top-6 right-6 z-[120] w-12 h-12 bg-red-600 hover:bg-white hover:text-black text-white flex items-center justify-center transition-all duration-300 group"
         >
-          <span className="text-2xl font-bold leading-none">✕</span>
+          <span className="text-xl font-bold">✕</span>
         </button>
 
-        {/* 
-            SCROLLABLE WRAPPER: 
-            This div handles all the movement.
-        */}
         <div className="overflow-y-auto h-full w-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 min-h-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-full">
             
-            {/* Image Gallery Column */}
-            <div className="bg-slate-100 p-2 space-y-2">
+            {/* Image Gallery */}
+            <div className="bg-black p-4 space-y-4 border-r border-zinc-900">
               {images.map((img, idx) => (
                 <img 
                   key={idx} 
                   src={`${API_BASE}/images/${img}`} 
-                  className="w-full rounded-xl shadow-sm hover:opacity-95 transition" 
-                  alt={`${selectedCar.make} detail view ${idx + 1}`} 
+                  className="w-full border border-zinc-800 grayscale-[30%] hover:grayscale-0 transition-all duration-500" 
+                  alt={`${selectedCar.make} detail ${idx + 1}`} 
                 />
               ))}
             </div>
 
-            {/* Details Column */}
-            <div className="p-8 flex flex-col justify-between">
-              <div>
-                <span className="text-blue-600 font-black uppercase tracking-widest text-[10px]">
-                  {t.modalStatus || "In Stock"}
-                </span>
-                <h2 className="text-3xl font-black text-slate-900 mt-2 tracking-tighter leading-tight">
-                  {selectedCar.year} {selectedCar.make} {selectedCar.model}
-                </h2>
-                
-                <div className="flex items-center gap-4 mt-4">
-                  <p className="text-3xl font-black text-slate-800">
-                    ${Number(selectedCar.price).toLocaleString()}
-                  </p>
-                  <div className="h-6 w-px bg-slate-300"></div>
-                  <p className="text-slate-500 font-bold uppercase text-xs tracking-widest">
-                    {Number(selectedCar.miles).toLocaleString()} {t.miles}
-                  </p>
+            {/* Details Section */}
+            <div className="p-8 md:p-12 flex flex-col">
+              <div className="mb-auto">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="h-4 w-1 bg-red-600"></div>
+                  <span className="text-zinc-500 font-black uppercase tracking-widest text-[10px]">
+                    {t.modalStatus || "Available for Sale"}
+                  </span>
                 </div>
 
-                <div className="mt-8">
-                  <h4 className="font-black text-slate-400 uppercase text-[10px] tracking-[0.2em] mb-2">
+                <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter leading-none uppercase italic">
+                  {selectedCar.year} <br/>
+                  <span className="text-red-600">{selectedCar.make}</span> {selectedCar.model}
+                </h2>
+                
+                <div className="flex items-center gap-6 mt-8 py-6 border-y border-zinc-900">
+                  <div>
+                    <p className="text-zinc-500 text-[10px] uppercase font-black tracking-widest mb-1">{t.formPrice}</p>
+                    <p className="text-3xl font-black text-white italic">
+                      ${Number(selectedCar.price).toLocaleString()}
+                    </p>
+                  </div>
+                  <div className="w-px h-10 bg-zinc-800"></div>
+                  <div>
+                    <p className="text-zinc-500 text-[10px] uppercase font-black tracking-widest mb-1">{t.miles}</p>
+                    <p className="text-3xl font-black text-white italic">
+                      {Number(selectedCar.miles).toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-10">
+                  <h4 className="font-black text-red-600 uppercase text-[10px] tracking-[0.3em] mb-4">
                     {t.formDescription}
                   </h4>
-                  <p className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm">
+                  <p className="text-zinc-300 leading-relaxed font-mono text-sm whitespace-pre-wrap">
                     {selectedCar.description || (lang === 'es' ? "Contáctenos para más información." : "Contact us for info.")}
                   </p>
                 </div>
               </div>
 
-              {/* Call to Action Box */}
-              <div className="mt-12 p-6 bg-slate-50 rounded-2xl border border-slate-200 mb-8 md:mb-0">
-                <p className="font-black text-slate-800 mb-1 uppercase text-xs tracking-wide">{t.modalInterest}</p>
-                <p className="text-sm text-slate-500 mb-4 font-medium">{t.modalCall}</p>
+              {/* Action Box */}
+              <div className="mt-12 p-8 bg-zinc-900 border-t-4 border-red-600">
+                <p className="font-black text-white mb-2 uppercase text-xs tracking-widest italic">{t.modalInterest}</p>
+                <p className="text-xs text-zinc-500 mb-6 font-mono uppercase">{t.modalCall}</p>
                 <a 
                   href="tel:6892829355" 
-                  className="inline-block w-full text-center bg-blue-600 text-white px-6 py-4 rounded-full font-black shadow-lg hover:bg-slate-900 transition-all duration-300 uppercase tracking-widest text-sm"
+                  className="inline-block w-full text-center bg-white text-black px-6 py-5 font-black hover:bg-red-600 hover:text-white transition-all duration-300 uppercase tracking-[0.2em] text-sm shadow-[4px_4px_0px_0px_rgba(220,38,38,1)]"
                 >
                   (689) 282-9355
                 </a>

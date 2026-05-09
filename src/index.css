@@ -1,1 +1,55 @@
 @import "tailwindcss";
+
+/* 
+  Tailwind v4 uses a CSS-first configuration. 
+  You can define theme variables directly here if needed, 
+  but for global styles, we use standard CSS.
+*/
+
+:root {
+  background-color: #000000;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000000;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Matching your professional, clean font stack */
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* --- CUSTOM INDUSTRIAL ELEMENTS --- */
+
+/* Sharp Red Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b; /* zinc-950 */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #dc2626; /* red-600 */
+  border: 2px solid #09090b;
+  border-radius: 0px; /* Keeping it sharp/square for the brand */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b91c1c; /* red-700 */
+}
+
+/* Themed Text Selection */
+::selection {
+  background-color: #dc2626;
+  color: white;
+}
+
+/* Smooth internal navigation */
+html {
+  scroll-behavior: smooth;
+}

@@ -8,17 +8,12 @@ export default {
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
     };
 
-    // 1. Handle Preflight CORS
     if (request.method === "OPTIONS") {
       return new Response(null, { headers: corsHeaders });
     }
 
-    // 2. Admin Authentication Gate
-    // We check for the key on any "write" operations (POST/DELETE)
     if (request.method === "POST" || request.method === "DELETE") {
       const authHeader = request.headers.get("Authorization");
-      
-      // We use env.ADMIN_KEY so you can set it via 'wrangler secret put'
       if (authHeader !== env.ADMIN_KEY) {
         return new Response(JSON.stringify({ error: "Unauthorized" }), {
           status: 401,
@@ -28,20 +23,16 @@ export default {
     }
 
     try {
-      // 3. Image Server
       if (url.pathname.startsWith("/images/")) {
         const imageKey = url.pathname.split("/").pop();
         const object = await env.BUCKET.get(imageKey);
-        
         if (!object) return new Response("Not Found", { status: 404 });
-        
         const headers = new Headers();
         object.writeHttpMetadata(headers);
         headers.set("Access-Control-Allow-Origin", "*");
         return new Response(object.body, { headers });
       }
 
-      // 4. GET: Fetch Inventory
       if (url.pathname === "/api/inventory" && request.method === "GET") {
         const { results } = await env.DB.prepare("SELECT * FROM cars ORDER BY id DESC").all();
         return new Response(JSON.stringify(results), {
@@ -49,7 +40,6 @@ export default {
         });
       }
 
-      // 5. POST: Toggle Featured Status
       if (url.pathname.startsWith("/api/inventory/feature/") && request.method === "POST") {
         const id = url.pathname.split("/").pop();
         const { featured } = await request.json(); 
@@ -63,7 +53,6 @@ export default {
         });
       }
 
-      // 6. POST: Add New Car
       if (url.pathname === "/api/inventory" && request.method === "POST") {
         const formData = await request.formData();
         const imageFiles = formData.getAll("images");
@@ -97,7 +86,6 @@ export default {
         });
       }
 
-      // 7. DELETE: Remove Car
       if (url.pathname.startsWith("/api/inventory/") && request.method === "DELETE") {
         const id = url.pathname.split("/").pop();
         const car = await env.DB.prepare("SELECT images FROM cars WHERE id = ?").bind(id).first();

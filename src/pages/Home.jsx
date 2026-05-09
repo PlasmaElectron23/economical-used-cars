@@ -5,7 +5,8 @@ import CarCard from '../components/inventory/CarCard';
 const Home = ({ inventory, setSelectedCar, API_BASE }) => {
   const { t } = useLanguage();
 
-  const featuredCars = inventory.filter(car => Number(car.featured) === 1).slice(0, 3);
+  // FIXED: Changed 'featured' to 'is_featured' to match the database column name
+  const featuredCars = inventory.filter(car => Number(car.is_featured) === 1).slice(0, 3);
 
   return (
     <div className="flex-grow bg-black text-white">
@@ -79,7 +80,7 @@ const Home = ({ inventory, setSelectedCar, API_BASE }) => {
         )}
       </section>
 
-      {/* CONTACT SECTION - TRANSLATED HEADERS */}
+      {/* CONTACT SECTION */}
       <section id="contact" className="py-24 bg-zinc-950 border-t-8 border-zinc-900">
         <div className="max-w-4xl mx-auto text-center px-6">
           <h2 className="text-4xl font-black uppercase italic mb-16 text-white tracking-[0.2em]">
@@ -87,7 +88,6 @@ const Home = ({ inventory, setSelectedCar, API_BASE }) => {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* Phone Item */}
             <div className="p-10 bg-black border border-zinc-800 hover:border-red-600 transition-all group relative">
               <div className="absolute top-0 left-0 w-2 h-2 bg-red-600"></div>
               <div className="text-red-600 mb-6 flex justify-center group-hover:scale-110 transition-transform">
@@ -101,7 +101,6 @@ const Home = ({ inventory, setSelectedCar, API_BASE }) => {
               </a>
             </div>
 
-            {/* Hours Item */}
             <div className="p-10 bg-black border border-zinc-800 hover:border-red-600 transition-all group relative">
               <div className="absolute top-0 right-0 w-2 h-2 bg-red-600"></div>
               <div className="text-red-600 mb-6 flex justify-center group-hover:scale-110 transition-transform">

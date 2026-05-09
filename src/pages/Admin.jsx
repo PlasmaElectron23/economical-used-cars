@@ -40,7 +40,7 @@ const Admin = ({ inventory, fetchInventory, API_BASE, setSelectedCar }) => {
 
   const handleToggleFeatured = async (id, currentStatus) => {
     try {
-      const newStatus = currentStatus === 1 ? 0 : 1;
+      const newStatus = Number(currentStatus) === 1 ? 0 : 1;
       await fetch(`${API_BASE}/api/inventory/feature/${id}`, {
         method: 'POST',
         headers: { 'Authorization': ADMIN_KEY, 'Content-Type': 'application/json' },
@@ -66,6 +66,7 @@ const Admin = ({ inventory, fetchInventory, API_BASE, setSelectedCar }) => {
     }
   };
 
+  // Base class for inputs
   const inputClass = "w-full p-4 bg-black border border-zinc-800 text-white focus:border-red-600 outline-none transition-all font-mono text-sm uppercase tracking-tight placeholder:text-zinc-600";
 
   return (
@@ -82,11 +83,21 @@ const Admin = ({ inventory, fetchInventory, API_BASE, setSelectedCar }) => {
             <form onSubmit={handleFormSubmit} className="space-y-4">
               <input placeholder={t.formMake} value={formData.make} onChange={(e) => setFormData({...formData, make: e.target.value})} className={inputClass} required />
               <input placeholder={t.formModel} value={formData.model} onChange={(e) => setFormData({...formData, model: e.target.value})} className={inputClass} required />
-              <textarea placeholder={t.formDescription} value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} className={`${inputClass} h-32 resize-none`} />
               
-              <div className="grid grid-cols-2 gap-4">
+              {/* DESCRIPTION: Removed 'uppercase' and added 'normal-case' to allow mixed casing */}
+              <textarea 
+                placeholder={t.formDescription} 
+                value={formData.description} 
+                onChange={(e) => setFormData({...formData, description: e.target.value})} 
+                className={`${inputClass} h-32 resize-none normal-case tracking-normal`} 
+              />
+              
+              <div className="grid grid-cols-1 gap-4">
                 <input type="number" placeholder={t.formYear} value={formData.year} onChange={(e) => setFormData({...formData, year: e.target.value})} className={inputClass} required />
-                <input type="number" placeholder={t.formPrice} value={formData.price} onChange={(e) => setFormData({...formData, price: e.target.value})} className={inputClass} required />
+                <div className="grid grid-cols-2 gap-4">
+                  <input type="number" placeholder={t.formPrice} value={formData.price} onChange={(e) => setFormData({...formData, price: e.target.value})} className={inputClass} required />
+                  <input type="number" placeholder={t.formMiles || "Miles"} value={formData.miles} onChange={(e) => setFormData({...formData, miles: e.target.value})} className={inputClass} required />
+                </div>
               </div>
               
               <div className="border border-dashed border-zinc-800 p-4 hover:border-red-600 transition-colors bg-zinc-900/50">
@@ -116,8 +127,15 @@ const Admin = ({ inventory, fetchInventory, API_BASE, setSelectedCar }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {inventory.map(car => (
                 <div key={car.id} className="bg-zinc-950 p-[1px] group transition-all hover:bg-red-600">
-                  <div className="bg-black p-2">
-                    <CarCard car={car} isAdmin={true} API_BASE={API_BASE} setSelectedCar={setSelectedCar} handleToggleFeatured={handleToggleFeatured} handleDelete={handleDelete} />
+                  <div className="bg-black p-2 h-full">
+                    <CarCard 
+                      car={car} 
+                      isAdmin={true} 
+                      API_BASE={API_BASE} 
+                      setSelectedCar={setSelectedCar} 
+                      handleToggleFeatured={handleToggleFeatured} 
+                      handleDelete={handleDelete} 
+                    />
                   </div>
                 </div>
               ))}

@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-// Component Imports
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import DetailModal from './components/inventory/DetailModal';
 
-// Page Imports
 import Home from './pages/Home';
 import Inventory from './pages/Inventory';
 import Admin from './pages/Admin';
 
-/**
- * API_BASE: Production Cloudflare Worker URL
- */
 const API_BASE = "https://economical-used-cars-backend.silchris7.workers.dev";
 
 function App() {
@@ -36,7 +31,8 @@ function App() {
   }, []);
 
   return (
-    <div className="bg-slate-50 min-h-screen flex flex-col">
+    // UPDATED: Changed bg-slate-50 to bg-black for the dark theme
+    <div className="bg-black min-h-screen flex flex-col">
       <Navbar />
       
       <main className="flex-grow">
@@ -57,10 +53,6 @@ function App() {
             />
           } />
 
-          {/* 
-            STEP 7.3: Secret Admin URL 
-            Access at: https://economical-used-cars.pages.dev/admin-29amsk30sdf5
-          */}
           <Route path="/admin-29amsk30sdf5" element={
             <Admin 
               inventory={inventory}
